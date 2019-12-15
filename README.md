@@ -21,12 +21,17 @@ dollar byte '$'
 # Example code
 
 .data
+
 input byte 'sunslik shampoo,100$',0
 output byte 30 dup(?),0
 comma byte ','
 dollar '$'
 .code
-invoke substring,0,comma,addr input,addr output     ;output will be substring -->sunslik shampoo
-invoke substring ,comma,dollar,addr input,addr output ;output will be substring --> 100
+
+invoke substring,0,comma,addr input,addr output    
+;output will be substring -->sunslik shampoo
+
+invoke substring ,comma,dollar,addr input,addr output 
+;output will be substring --> 100
 
 
