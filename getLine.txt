@@ -1,0 +1,48 @@
+;-------------------------------------------------getline Function -----------------------------------------
+
+getLine PROC uses eax ebx esi, line:DWORD, inputStr:PTR BYTE, outputStr:PTR BYTE
+.data
+	lineCount DWORD 1
+	currChar BYTE ?
+.code
+	MOV esi,outputStr
+	MOV ebx,inputStr
+
+	MOV al,[ebx]
+	MOV currChar,al
+
+	.WHILE currChar != 000h
+		.WHILE currChar != 00dh
+		;check if the line is desired line then start copying characters until 00dh appears
+			MOV eax,line
+			.IF lineCount == eax
+				MOV al,currChar
+				MOV [esi],al
+				INC esi
+			.ENDIF
+			INC ebx
+			MOV al,[ebx]
+			MOV currChar,al
+		.ENDW
+
+		;If the last loop was of desired line, then break main loop.
+		MOV eax,line
+		.IF	lineCount == eax
+			.BREAK
+		.ENDIF
+
+		INC lineCount
+		ADD ebx,2             ;adding two because to skip 00ah character
+		MOV al,[ebx]
+		MOV currChar,al
+	.ENDW
+mov lineCount,1	
+RET
+getLine ENDP
+
+
+
+
+
+;----------------------------------------------------------------------------------------------------
+
